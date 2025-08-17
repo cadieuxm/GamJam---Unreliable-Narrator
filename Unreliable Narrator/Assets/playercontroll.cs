@@ -10,7 +10,7 @@ public class playercontroll : MonoBehaviour
     Rigidbody2D rb;
     Vector2 horizInput, velocity, targetVelocity, currentVelocity;
     bool canJump = true;
-
+    public float addedvelocity = 0f;
     private void Awake ()
     {
         inputActions = new InputSystem_Actions();
@@ -39,7 +39,7 @@ public class playercontroll : MonoBehaviour
     {
         horizInput = move.ReadValue<Vector2>();
         velocity = new Vector2();
-        targetVelocity = new Vector2(horizInput.x * movementSpeed, rb.linearVelocity.y);
+        targetVelocity = new Vector2(horizInput.x * movementSpeed + addedvelocity, rb.linearVelocity.y);
         rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref currentVelocity, 0.05f); //change later for smoothing
 
         if (jump.IsPressed())
@@ -52,6 +52,23 @@ public class playercontroll : MonoBehaviour
             
 
 
+
+        }
+    }
+  
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if(collision.gameObject.CompareTag("Moving Platform"))
+        {
+           // addedvelocity = collision.rigidbody.linearVelocityX;
+
+        }
+    }
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Moving Platform"))
+        {
+            addedvelocity = 0;
 
         }
     }
