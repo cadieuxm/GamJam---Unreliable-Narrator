@@ -59,7 +59,7 @@ public class playercontroll : MonoBehaviour
         targetVelocity = new Vector2(horizInput.x * movementSpeed + addedvelocity, rb.linearVelocity.y);
         rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref currentVelocity, 0.05f); //change later for smoothing
 
-        if (jump.triggered)
+        if (jump.IsPressed())
         {
 
             if (canJump == true)
@@ -73,7 +73,7 @@ public class playercontroll : MonoBehaviour
         {
             if (!isWallJumping)
             {
-                rb.linearVelocity = new Vector2(horizInput.x * movementSpeed, rb.linearVelocity.y);
+                rb.linearVelocity = new Vector2(horizontal * speed, rb.linearVelocity.y);
             }
         }
     }
@@ -194,7 +194,7 @@ public class playercontroll : MonoBehaviour
             wallJumpingCounter -= Time.deltaTime;
         }
 
-        if (jump.triggered && wallJumpingCounter > 0f)
+        if (jump.IsPressed() && wallJumpingCounter > 0f)
         {
             isWallJumping = true;
             rb.linearVelocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);

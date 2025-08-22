@@ -1,4 +1,6 @@
+using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class PlatformBehavior : MonoBehaviour
@@ -7,6 +9,7 @@ public class PlatformBehavior : MonoBehaviour
     float targetposition, startposition;
     [SerializeField]
     public float amplitude,currentvelocity;
+    bool canStop = true;
     bool playerincontact = false;
     playercontroll playercontroller = null;
    
@@ -28,9 +31,8 @@ public class PlatformBehavior : MonoBehaviour
        //rb.position = new Vector2(Mathf.Lerp(this.transform.localPosition.x, targetposition, amplitude*4), this.transform.position.y);
         if (Mathf.Abs(rb.position.x - targetposition) <= 0.05f)
         {
-            amplitude = -amplitude;
-            targetposition += 2 * amplitude;
-            currentvelocity = -currentvelocity;
+            if (canStop == true)
+            StartCoroutine("PlatformWait");
         }
         if (playerincontact)
         {
@@ -50,5 +52,18 @@ public class PlatformBehavior : MonoBehaviour
     {
         playerincontact = false;
 
+    }
+
+    IEnumerator PlatformWait()
+    {
+        canStop = false;
+        float tempVel = currentvelocity;
+        currentvelocity = 0f;
+        yield return new WaitForSeconds(2f);
+        amplitude = -amplitude;
+        targetposition += 2 * amplitude;
+        currentvelocity = -tempVel;
+        yield return new WaitForSeconds(0.5f);
+        canStop = true;
     }
 }
