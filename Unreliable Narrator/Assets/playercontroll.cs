@@ -1,11 +1,14 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
 
 public class playercontroll : MonoBehaviour
 {
-
+    
+    public float Health, MaxHealth;
     private bool isWallSliding;
     private float wallSlideSpeed = 2f;
 
@@ -17,10 +20,9 @@ public class playercontroll : MonoBehaviour
     private float wallJumpingDuration = 0.4f;
     private Vector2 wallJumpingPower = new Vector2(8f, 16f);
 
-
     [SerializeField] private Transform wallCheck;
     [SerializeField] private LayerMask wallLayer;
-
+    [SerializeField] private HealthBarUI HealthBar;
 
     public InputSystem_Actions inputActions;
     public InputAction move, jump;
@@ -29,6 +31,7 @@ public class playercontroll : MonoBehaviour
     Vector2 horizInput, targetVelocity, currentVelocity;
     bool canJump = true;
     public float addedvelocity = 0f;
+
     private void Awake ()
     {
         inputActions = new InputSystem_Actions();
@@ -37,6 +40,7 @@ public class playercontroll : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        HealthBar.SetMaxHealth(MaxHealth);
     }
 
     private void OnEnable ()
@@ -59,7 +63,7 @@ public class playercontroll : MonoBehaviour
         targetVelocity = new Vector2(horizInput.x * movementSpeed + addedvelocity, rb.linearVelocity.y);
         rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref currentVelocity, 0.05f); //change later for smoothing
 
-        if (jump.triggered)
+        if (jump.IsPressed())
         {
 
             if (canJump == true)
@@ -82,7 +86,6 @@ public class playercontroll : MonoBehaviour
         WallJump();
         WallSlide();
         flipSprite();
-
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -227,5 +230,13 @@ public class playercontroll : MonoBehaviour
 
         jump.Enable();
         move.Enable();
+    }
+
+    public void SetHealth(float healthChange) 
+    {
+        Health += healthChange;
+        Health = Mathf.Clamp(Health, 0, MaxHealth);
+
+        HealthBar.SetHealth(Health);
     }
 }
