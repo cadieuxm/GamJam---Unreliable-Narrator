@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1606674853147278160}
   - component: {fileID: 2635552360272124606}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GroundedHitbox
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 6909234455007250489}
   - component: {fileID: 8794744287896189123}
   - component: {fileID: 1808917818764516150}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Floor
   m_TagString: Untagged
   m_Icon: {fileID: 0}

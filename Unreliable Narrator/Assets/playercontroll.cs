@@ -9,27 +9,28 @@ public class playercontroll : MonoBehaviour
 {
     
     public float Health, MaxHealth;
-    private bool isWallSliding;
+    private bool isWallSliding,isHoldingJump;
     private float wallSlideSpeed = 2f;
+    private int faceDirection = -1;
 
 
     private bool isWallJumping;
     private float wallJumpingDirection;
-    private float wallJumpingTime = 0.2f;
+    private float wallJumpingTime = 0.1f;
     private float wallJumpingCounter;
-    private float wallJumpingDuration = 0.4f;
-    private Vector2 wallJumpingPower = new Vector2(8f, 16f);
+    private float wallJumpingDuration = 0.1f;
+    private Vector2 wallJumpingPower = new Vector2(10f, 10f);
 
-    [SerializeField] private Transform wallCheck;
-    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private Transform wallCheck,groundCheck;
+    [SerializeField] private LayerMask wallLayer,groundLayer;
     [SerializeField] private HealthBarUI HealthBar;
 
     public InputSystem_Actions inputActions;
     public InputAction move, jump;
     float movementSpeed = 10f;
+    float maxfallspeed = -20f;
     Rigidbody2D rb;
     Vector2 horizInput, targetVelocity, currentVelocity;
-    bool canJump = true;
     public float addedvelocity = 0f;
 
     private void Awake ()
@@ -39,7 +40,9 @@ public class playercontroll : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        isHoldingJump = false;
         rb = GetComponent<Rigidbody2D>();
+        rb.gravityScale = 2f;
         HealthBar.SetMaxHealth(MaxHealth);
     }
 
@@ -59,42 +62,91 @@ public class playercontroll : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        horizInput = move.ReadValue<Vector2>();
-        targetVelocity = new Vector2(horizInput.x * movementSpeed + addedvelocity, rb.linearVelocity.y);
-        rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref currentVelocity, 0.05f); //change later for smoothing
 
-        if (jump.IsPressed())
+        if (isWallJumping) 
         {
-
-            if (canJump == true)
-            {
-                rb.AddForceY(400.0f);
-            }
-
+            rb.linearVelocity = new Vector2(-horizInput.x *wallJumpingPower.x,wallJumpingPower.y);
+        
+        }
+        else
+        {
+            //targetVelocity = new Vector2(horizInput.x * movementSpeed + addedvelocity, rb.linearVelocity.y);
+            //rb.linearVelocity = Vector2.SmoothDamp(rb.linearVelocity, targetVelocity, ref currentVelocity, 0.05f); //change later for smoothing
+            rb.linearVelocity = new Vector2(horizInput.x * movementSpeed + addedvelocity, rb.linearVelocity.y);
         }
 
+         
 
+            
+            
+        
+
+        if (rb.linearVelocityY < maxfallspeed)
         {
-            if (!isWallJumping)
-            {
-                rb.linearVelocity = new Vector2(horizInput.x * movementSpeed, rb.linearVelocity.y);
-            }
+
+            rb.linearVelocityY = maxfallspeed;
         }
     }
     private void Update()
     {
-        WallJump();
+        horizInput = move.ReadValue<Vector2>();
+        if (jump.IsPressed() && !isHoldingJump)
+        {
+
+            if (Grounded())
+            {
+                rb.linearVelocityY = 12.0f;
+                isHoldingJump = true;
+            }
+
+            if (isWallSliding) //wall jump
+            {
+                isWallJumping = true;
+                isHoldingJump = true;
+                this.transform.localScale = new Vector3(transform.localScale.x * -1,transform.localScale.y,transform.localScale.z); //flip the character when wall jumping
+
+                Invoke("StopWallJumping", wallJumpingDuration);
+            }
+        }
+
+        if (jump.WasReleasedThisFrame())
+        {
+            isHoldingJump = false;
+            rb.gravityScale = 3f;
+            if (rb.linearVelocityY > 0f)
+            {
+                rb.linearVelocityY = 0f;
+            }
+
+
+        }
+
+        if (!Grounded() && !isWallSliding)
+        {
+            if (rb.linearVelocityY < 0f)
+            {
+                rb.gravityScale = 3f;
+
+            }
+            else
+            {
+                rb.gravityScale = 2f;
+            }
+
+
+        }
+
+        if (!isWallJumping)
+        {
+            flipSprite();
+        }
         WallSlide();
-        flipSprite();
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.CompareTag("Moving Platform"))
-        {
-           // addedvelocity = collision.rigidbody.linearVelocityX;
-
-        }
+ 
     }
     private void OnCollisionExit2D(Collision2D collision)
     {
@@ -107,11 +159,7 @@ public class playercontroll : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        //check if player collision leaves contact with ground
-        if (collision.gameObject.CompareTag("Ground")){
-            canJump = false;
-            print("ungrounded,can'tjump");
-        }
+
 
     }
     private void OnTriggerEnter2D(Collider2D collision)
@@ -119,8 +167,6 @@ public class playercontroll : MonoBehaviour
         //check for collision with ground
         if (collision.gameObject.CompareTag("Ground"))
         {
-            print("grounded");
-            canJump = true;
 
         }
     }
@@ -129,91 +175,51 @@ public class playercontroll : MonoBehaviour
     {
         if(horizInput.x > 0f)
         {
-            this.GetComponent<SpriteRenderer>().flipX = true;
-            wallCheck = this.transform.GetChild(1);
+            Vector3 localscale = transform.localScale;
+            localscale.x = -1;
+            transform.localScale = localscale;
+
         }
         else if(horizInput.x < 0f)
         {
-            this.GetComponent<SpriteRenderer>().flipX = false;
-            wallCheck = this.transform.GetChild(0);
+            Vector3 localscale = transform.localScale;
+            localscale.x = 1;
+            transform.localScale = localscale;
+
         }
     }
 
     private bool IsWalled()
     {
 
-        return Physics2D.OverlapCircle(wallCheck.position, 0.2f, wallLayer);
+        return Physics2D.OverlapCircle(wallCheck.position, 0.25f, wallLayer);
 
     }
 
     private void WallSlide()
     {
-        if (IsWalled() && !canJump && horizInput.x != 0f){
+        if (IsWalled() && !Grounded() && horizInput.x != 0f){
             isWallSliding = true;
-            rb.linearVelocity = new Vector2(rb.linearVelocityX, Mathf.Clamp(rb.linearVelocityY, -wallSlideSpeed, float.MaxValue));
+            this.GetComponent<SpriteRenderer>().color = Color.magenta;
+            rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -wallSlideSpeed, 2f);
         }
         else
         {
+            this.GetComponent<SpriteRenderer>().color = Color.white;
+
             isWallSliding = false;
         }
 
     }
             
-    //private void WallJump()
-    //{
-    //    if (isWallSliding)
-    //    {
-    //        if (wallCheck = this.transform.GetChild(1)) // checks if the player needs to go left
-    //        {
-    //            this.GetComponent<SpriteRenderer>().flipX = false;
-    //            wallCheck = this.transform.GetChild(0);
-    //            rb.linearVelocity = new Vector2(3f, 10f);
-    //            StartCoroutine("WallJumpCooldown");
-    //        }
-    //        else if (wallCheck = this.transform.GetChild(0))
-    //        {
-    //            this.GetComponent<SpriteRenderer>().flipX = true;
-    //            wallCheck = this.transform.GetChild(1);
-    //            rb.linearVelocity = new Vector2(-3f, 10f);
-    //            StartCoroutine("WallJumpCooldown");
 
-    //        }
-
-    //    }
-
-    //}
-    private void WallJump()
+    private bool Grounded()
     {
-        if (isWallSliding)
-        {
-            isWallJumping = false;
-            wallJumpingDirection = -transform.localScale.x;
-            wallJumpingCounter = wallJumpingTime;
+        
+        return Physics2D.OverlapBox(groundCheck.position,new Vector2(2.4f,0.3f), 0, groundLayer);
 
-            CancelInvoke(nameof(StopWallJumping));
-        }
-        else
-        {
-            wallJumpingCounter -= Time.deltaTime;
-        }
-
-        if (jump.triggered && wallJumpingCounter > 0f)
-        {
-            isWallJumping = true;
-            rb.linearVelocity = new Vector2(wallJumpingDirection * wallJumpingPower.x, wallJumpingPower.y);
-            wallJumpingCounter = 0f;
-
-            //if (transform.localScale.x != wallJumpingDirection) // this flips everything. maybe just
-            //{
-            //    isFacingRight = !isFacingRight;
-            //    Vector3 localScale = transform.localScale;
-            //    localScale.x *= -1f;
-            //    transform.localScale = localScale;
-            //}
-
-            Invoke(nameof(StopWallJumping), wallJumpingDuration);
-        }
     }
+  
 
     private void StopWallJumping()
     {
@@ -221,16 +227,6 @@ public class playercontroll : MonoBehaviour
     }
 
 
-    IEnumerator WallJumpCooldown()
-    {
-        jump.Disable();
-        move.Disable();
-
-        yield return new WaitForSeconds(0.2f);
-
-        jump.Enable();
-        move.Enable();
-    }
 
     public void SetHealth(float healthChange) 
     {
