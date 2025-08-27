@@ -67,6 +67,7 @@
     <Compile Include="Assets\InputSystem_Actions.cs" />
     <Compile Include="Assets\playercontroll.cs" />
     <Compile Include="Assets\HealthBarUI.cs" />
+    <Compile Include="Assets\GameController.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

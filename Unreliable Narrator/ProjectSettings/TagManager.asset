@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Ground
   - Moving Platform
+  - Attack
+  - RespawnAnchor
+  - Hazard
   layers:
   - Default
   - TransparentFX
