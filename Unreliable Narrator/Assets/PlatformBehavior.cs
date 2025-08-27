@@ -27,8 +27,7 @@ public class PlatformBehavior : MonoBehaviour
     void Update()
     {
         rb.linearVelocityX = currentvelocity;
-        //rb.position = new Vector2( Mathf.SmoothDamp(this.transform.localPosition.x, targetposition, ref currentvelocity, .5f),this.transform.localPosition.y);
-       //rb.position = new Vector2(Mathf.Lerp(this.transform.localPosition.x, targetposition, amplitude*4), this.transform.position.y);
+       
         if (Mathf.Abs(rb.position.x - targetposition) <= 0.05f)
         {
             if (canStop == true)
