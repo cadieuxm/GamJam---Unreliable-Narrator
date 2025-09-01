@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|c:\\users\\pumpk\\desktop\\unreliable narrator jam\\gamjam---unreliable-narrator\\unreliable narrator\\assets\\healthbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|solutionrelative:assets\\healthbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|c:\\users\\pumpk\\desktop\\unreliable narrator jam\\gamjam---unreliable-narrator\\unreliable narrator\\assets\\playercontroll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|solutionrelative:assets\\playercontroll.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|c:\\users\\pumpk\\desktop\\unreliable narrator jam\\gamjam---unreliable-narrator\\unreliable narrator\\assets\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\assets\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|solutionrelative:assets\\gamecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\assets\\platformbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|solutionrelative:assets\\platformbehavior.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\assets\\healthbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|solutionrelative:assets\\healthbarui.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{03C5218B-3197-D98D-2505-EA82D819C351}|Assembly-CSharp.csproj|C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\assets\\playercamera.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -30,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,7 +46,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "HealthBarUI.cs",
               "DocumentMoniker": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\Assets\\HealthBarUI.cs",
               "RelativeDocumentMoniker": "Assets\\HealthBarUI.cs",
@@ -54,18 +54,17 @@
               "RelativeToolTip": "Assets\\HealthBarUI.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAeAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-26T23:54:39.278Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-08-26T23:54:39.278Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 1,
               "Title": "GameController.cs",
               "DocumentMoniker": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\Assets\\GameController.cs",
               "RelativeDocumentMoniker": "Assets\\GameController.cs",
               "ToolTip": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\Assets\\GameController.cs",
               "RelativeToolTip": "Assets\\GameController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAABjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-26T23:26:16.203Z",
               "EditorCaption": ""
@@ -84,7 +83,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "PlatformBehavior.cs",
               "DocumentMoniker": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\Assets\\PlatformBehavior.cs",
               "RelativeDocumentMoniker": "Assets\\PlatformBehavior.cs",
@@ -92,17 +91,18 @@
               "RelativeToolTip": "Assets\\PlatformBehavior.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAACAAAAAgAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-08-17T17:21:11.637Z"
+              "WhenOpened": "2025-08-17T17:21:11.637Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "playercontroll.cs",
               "DocumentMoniker": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\Assets\\playercontroll.cs",
               "RelativeDocumentMoniker": "Assets\\playercontroll.cs",
               "ToolTip": "C:\\Users\\Pumpk\\Desktop\\Unreliable Narrator Jam\\GamJam---Unreliable-Narrator\\Unreliable Narrator\\Assets\\playercontroll.cs",
               "RelativeToolTip": "Assets\\playercontroll.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAAADYAAAAIAAAAAAAAAA==",
+              "ViewState": "AgIAAJwAAACAYmZmZiYuwLkAAABBAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-08-16T21:02:38.51Z",
               "EditorCaption": ""

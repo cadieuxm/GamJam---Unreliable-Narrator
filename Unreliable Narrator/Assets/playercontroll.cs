@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static UnityEditor.Searcher.SearcherWindow.Alignment;
+using System;
 
 public class playercontroll : MonoBehaviour
 {
@@ -13,6 +14,8 @@ public class playercontroll : MonoBehaviour
     private float wallSlideSpeed = 2f;
     private int faceDirection = -1;
 
+
+    public event Action PlayerDies;
     GameObject respawnAnchor;
 
 
@@ -52,7 +55,7 @@ public class playercontroll : MonoBehaviour
         isHoldingJump = false;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 2f;
-        HealthBar.SetMaxHealth(MaxHealth);
+       // HealthBar.SetMaxHealth(MaxHealth);
 
 
     }
@@ -177,8 +180,11 @@ public class playercontroll : MonoBehaviour
         {
             Health -= 1;
 
+            
             transform.position = respawnAnchor.transform.position;
 
+            PlayerDies.Invoke(); // NEED TO MAKE THIS ACTIVATE WHEN DYING, NEED TO MAKE A GOOD HEALTH SYSTEM.
+            
             //if health ends up 0, call the "death/game over" function that hasn't been made yet
 
         
