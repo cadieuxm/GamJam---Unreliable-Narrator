@@ -1,24 +1,31 @@
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Tilemaps;
 
 public class GameController : MonoBehaviour
 {
 
     GameObject spawnPoint, playerCharacter, playerInstance;
-    public GameObject GameOverCanvas;
+    public GameObject GameOverCanvas, changingTileMap;
     playercontroll PlayerController;
+
+    //trying out shader shit
+    TilemapRenderer tilemapRenderer;
+    //
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spawnPoint = GameObject.FindWithTag("Respawn");
         playerCharacter = Resources.Load("Isabelle").GameObject();
-       playerInstance =  Instantiate(playerCharacter, spawnPoint.transform.position,Quaternion.identity);
+        playerInstance =  Instantiate(playerCharacter, spawnPoint.transform.position,Quaternion.identity);
        
+        tilemapRenderer = changingTileMap.GetComponent<TilemapRenderer>();
 
         PlayerController = playerInstance.GetComponent<playercontroll>();
         PlayerController.PlayerDies += GameOver;
+        PlayerController.SwitchNarrator += editTileMapColor;
     }
 
     private void OnEnable()
@@ -55,5 +62,17 @@ public class GameController : MonoBehaviour
 
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 
+    }
+
+    void editTileMapColor()
+    {
+
+        tilemapRenderer.sharedMaterial.color = new Color(1f,0.75f,1f);
+
+    }
+
+    private void OnApplicationQuit()
+    {
+        tilemapRenderer.sharedMaterial.color = Color.white;
     }
 }

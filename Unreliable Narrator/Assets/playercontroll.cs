@@ -8,14 +8,15 @@ using System;
 
 public class playercontroll : MonoBehaviour
 {
-    
+
+
     public float Health, MaxHealth;
     private bool isWallSliding,isHoldingJump;
     private float wallSlideSpeed = 2f;
     private int faceDirection = -1;
 
 
-    public event Action PlayerDies;
+    public event Action PlayerDies,SwitchNarrator;
     GameObject respawnAnchor;
 
 
@@ -159,10 +160,12 @@ public class playercontroll : MonoBehaviour
 
         if (attack.IsPressed())
         {
-            GameObject attackhitbox = GameObject.FindGameObjectWithTag("Attack");
-            attackhitbox.GetComponent<BoxCollider2D>().enabled = true;
-            hitanimator.enabled = true;
-            hitanimator.Play("Entry");
+            //GameObject attackhitbox = GameObject.FindGameObjectWithTag("Attack");
+            //attackhitbox.GetComponent<BoxCollider2D>().enabled = true;
+            //hitanimator.enabled = true;
+            //hitanimator.Play("Entry");
+
+            SwitchNarrator.Invoke();
         }
 
         if (hitanimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)

@@ -6,6 +6,8 @@ using UnityEngine;
 public class PlatformBehavior : MonoBehaviour
 {
 
+
+
     float targetposition, startposition;
     [SerializeField]
     public float amplitude,currentvelocity;

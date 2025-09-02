@@ -9,6 +9,7 @@ TagManager:
   - Attack
   - RespawnAnchor
   - Hazard
+  - ChangableTileMap
   layers:
   - Default
   - TransparentFX
