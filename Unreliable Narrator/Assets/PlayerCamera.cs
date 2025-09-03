@@ -17,6 +17,10 @@ public class PlayerCamera : MonoBehaviour
         {
             this.transform.position = new Vector3(Player.transform.position.x, Player.transform.position.y,-10);
         }
+        else
+        {
+            Player = GameObject.FindWithTag("Player");
+        }
         
     }
 }
