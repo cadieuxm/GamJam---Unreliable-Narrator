@@ -38,7 +38,7 @@ public class playercontroll : MonoBehaviour
     Rigidbody2D rb;
     Vector2 horizInput, targetVelocity, currentVelocity;
     public float addedvelocity = 0f;
-    Animator animator,hitanimator;
+    [SerializeField] private Animator animator,hitanimator;
     AnimatorStateInfo animStateInfo;
 
     private void Awake ()
@@ -50,12 +50,14 @@ public class playercontroll : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        hitanimator = this.GetComponentInChildren<Animator>();
-        animStateInfo = hitanimator.GetCurrentAnimatorStateInfo(0);
-        hitanimator.enabled = false;
+        animator = GetComponent<Animator>();
+        //hitanimator = this.GetComponentInChildren<Animator>();
+        //animStateInfo = hitanimator.GetCurrentAnimatorStateInfo(0);
+       // hitanimator.enabled = false;
         isHoldingJump = false;
         rb = GetComponent<Rigidbody2D>();
         rb.gravityScale = 2f;
+
        // HealthBar.SetMaxHealth(MaxHealth);
 
 
@@ -84,7 +86,8 @@ public class playercontroll : MonoBehaviour
         if (isWallJumping) 
         {
             rb.linearVelocity = new Vector2(-horizInput.x *wallJumpingPower.x,wallJumpingPower.y);
-        
+            animator.SetBool("IsJumping", true);
+
         }
         else
         {
@@ -108,6 +111,17 @@ public class playercontroll : MonoBehaviour
     private void Update()
     {
         horizInput = move.ReadValue<Vector2>();
+
+        if (horizInput.x != 0)
+        {
+            animator.SetBool("IsMoving", true);
+
+        }
+        else
+        {
+            animator.SetBool("IsMoving", false);
+        }
+
         if (jump.IsPressed() && !isHoldingJump)
         {
 
@@ -115,14 +129,15 @@ public class playercontroll : MonoBehaviour
             {
                 rb.linearVelocityY = 12.0f;
                 isHoldingJump = true;
+                animator.SetBool("IsJumping", true);
             }
 
             if (isWallSliding) //wall jump
             {
                 isWallJumping = true;
                 isHoldingJump = true;
-                this.transform.localScale = new Vector3(transform.localScale.x * -1,transform.localScale.y,transform.localScale.z); //flip the character when wall jumping
-
+                this.transform.localScale = new Vector3(transform.localScale.x * -1, transform.localScale.y, transform.localScale.z); //flip the character when wall jumping
+                animator.SetBool("IsJumping", true);
                 Invoke("StopWallJumping", wallJumpingDuration);
             }
         }
@@ -131,6 +146,7 @@ public class playercontroll : MonoBehaviour
         {
             isHoldingJump = false;
             rb.gravityScale = 3f;
+            animator.SetBool("IsJumping", false);
             if (rb.linearVelocityY > 0f)
             {
                 rb.linearVelocityY = 0f;
@@ -144,10 +160,12 @@ public class playercontroll : MonoBehaviour
             if (rb.linearVelocityY < 0f)
             {
                 rb.gravityScale = 3f;
+                animator.SetBool("IsJumping", false);
             }
             else
             {
                 rb.gravityScale = 2f;
+                animator.SetBool("IsJumping", true);
             }
         }
 
@@ -168,13 +186,13 @@ public class playercontroll : MonoBehaviour
             SwitchNarrator.Invoke();
         }
 
-        if (hitanimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
-        {
-            GameObject attackhitbox = GameObject.FindGameObjectWithTag("Attack");
-            attackhitbox.GetComponent<BoxCollider2D>().enabled = false;
-            hitanimator.enabled = false;
+        //if (hitanimator.GetCurrentAnimatorStateInfo(0).normalizedTime >= 1.0f)
+        //{
+        //    GameObject attackhitbox = GameObject.FindGameObjectWithTag("Attack");
+        //    attackhitbox.GetComponent<BoxCollider2D>().enabled = false;
+        //    hitanimator.enabled = false;
 
-        }
+        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -247,13 +265,12 @@ public class playercontroll : MonoBehaviour
     {
         if (IsWalled() && !Grounded() && horizInput.x != 0f){
             isWallSliding = true;
-            this.GetComponent<SpriteRenderer>().color = Color.magenta;
             rb.linearVelocityY = Mathf.Clamp(rb.linearVelocityY, -wallSlideSpeed, 2f);
+            animator.SetBool("IsOnWall", true);
         }
         else
         {
-            this.GetComponent<SpriteRenderer>().color = Color.white;
-
+            animator.SetBool("IsOnWall", false);
             isWallSliding = false;
         }
 
